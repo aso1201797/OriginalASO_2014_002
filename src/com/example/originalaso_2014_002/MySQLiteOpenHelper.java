@@ -33,13 +33,13 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
 
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-		db.execSQL("drop table Hitokoto ");
+		db.execSQL("drop table Hitokoto;");
 		onCreate(db);
 		// TODO 自動生成されたメソッド・スタブ
 
 	}
 
-	public void insertHitoko(SQListeDatabase db, String inputMsg){
+	public void insertHitokoto(SQLiteDatabase db, String inputMsg){
 
 		String sqlstr = " insert into Hitokoto (phrase) values(' " + inputMsg + " '); ";
 			try {
@@ -65,7 +65,7 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
 					cursor.moveToFirst();
 					rtString = cursor.getString(1);
 				}
-				cursor.colse();
+				cursor.close();
 
 			} catch (SQLException e) {
 				Log.e("ERROR", e.toString());
@@ -73,6 +73,40 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
 
 			}
 		return rtString;
+	}
+
+	public SQLiteCursor selectHitokotoList(SQLiteDatabase db){
+
+		SQLiteCursor cursor = null;
+
+		String sqlstr = " SELECT _id, phrase FROM Hitokoto ORDER BY _id; ";
+		try {
+			cursor = (SQLiteCursor)db.rawQuery(sqlstr, null);
+			if(cursor.getCount()!=0){
+				cursor.moveToFirst();
+			}
+
+		} catch (SQLException e) {
+			Log.e("ERROR",e.toString());
+		}finally {
+
+		}
+		return cursor;
+	}
+
+	public void deleteHitokoto(SQLiteDatabase db, int id){
+
+		String sqlstr = " DELETE FROM Hitokoto where _id = " + id + " ;";
+		try {
+
+		db.beginTransaction();
+		db.execSQL(sqlstr);
+		db.setTransactionSuccessful();
+		} catch (SQLException e) {
+			Log.e("ERROR", e.toString());
+		}finally {
+			db.endTransaction();
+		}
 	}
 
 }
