@@ -17,13 +17,13 @@
     android:gravity="center_horizontal" >
 
     <Button
-        android:id="@+id/btnMAINTE"
+        android:id="@+id/LvHITOKOTO"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="戻る" />
 
     <Button
-        android:id="@+id/btnTOUROKU"
+        android:id="@+id/btnDELETE"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="削除" />
